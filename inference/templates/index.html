@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hallucination Detector</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        textarea {
+            width: 60%;
+            height: 120px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #22c55e;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .card {
+            margin: 20px auto;
+            padding: 15px;
+            width: 60%;
+            border-radius: 10px;
+            background: #1e293b;
+        }
+
+        .hallucinated { color: red; }
+        .factual { color: lightgreen; }
+        .uncertain { color: orange; }
+    </style>
+</head>
+<body>
+
+<h1>🧠 Hallucination Detector (News Domain)</h1>
+
+<form method="POST">
+    <textarea name="text" placeholder="Enter text..."></textarea><br><br>
+    <button type="submit">Analyze</button>
+</form>
+
+{% if results %}
+    {% for r in results %}
+        <div class="card">
+            <p><b>Claim:</b> {{ r.claim }}</p>
+            <p class="{{ r.result|lower }}">
+                <b>Result:</b> {{ r.result }} ({{ r.confidence }})
+            </p>
+            <p><b>Evidence:</b> {{ r.evidence[0] }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
